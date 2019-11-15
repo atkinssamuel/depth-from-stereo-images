@@ -9,7 +9,7 @@ The following images illustrate the results of the more accurate belief propagat
 
 *Figure 1: Cones stereo image used to produce depth map*
 
-![](results/best/depth_mapping_best_cones_cut.png)
+![](results/best/depth_mapping_best_cones_cut.PNG)
 
 *Figure 2: Depth map produced by belief propagation algorithm*
 
@@ -51,7 +51,7 @@ for each image couple below:
 
 *Figure 4: Teddy image*
 
-![](results/best/depth_mapping_best_teddy_cut.png)
+![](results/best/depth_mapping_best_teddy_cut.PNG)
 
 *Figure 5: Depth mapping of teddy image pair using belief propagation algorithm*
 
@@ -71,7 +71,7 @@ for each image couple below:
 
 *Figure 8: Cones image*
 
-![](results/best/depth_mapping_best_cones_cut.png)
+![](results/best/depth_mapping_best_cones_cut.PNG)
 
 *Figure 9: Depth mapping of cones image pair using belief propagation*
 
