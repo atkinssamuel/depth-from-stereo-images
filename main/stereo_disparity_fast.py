@@ -1,29 +1,10 @@
 import numpy as np
-from numpy.linalg import inv
-from scipy.ndimage.filters import *
 
 
-def sum_of_absolute_differences(matrix_a, matrix_b):
-    difference = abs(matrix_a - matrix_b).flatten()
-    SAD = sum(difference)
+def sum_of_absolute_differences(x, y, x_search, window_size, Il, Ir):
+    SAD = np.mean(np.absolute(
+        Il[y:y + window_size, x:x + window_size] - Ir[y:y + window_size, x_search:x_search + window_size]))
     return SAD
-
-
-def window(image, x, y, d):
-    left = x - d if x - d > 0 else 0
-    right = x + d if x + d < image.shape[0] else image.shape[0]
-    top = y - d if y - d > 0 else 0
-    bottom = y + d if y + d < image.shape[1] else image.shape[1]
-    return image[top:bottom, left:right]
-
-
-def window_bounds(Il, Ir, x, y, d):
-    left = x - d if x - d > 0 else 0
-    right = min(x + d, Il.shape[1], Ir.shape[1])
-    top = y - d if y - d > 0 else 0
-    bottom = min(y + d, Il.shape[0], Ir.shape[0])
-    return [left, right, top, bottom]
-
 
 
 def stereo_disparity_fast(Il, Ir, bbox, maxd):
@@ -64,35 +45,28 @@ def stereo_disparity_fast(Il, Ir, bbox, maxd):
     # Your code goes here.
 
     # ------------------
-    # Max disparity value = 63 pixels
-    UL = np.array([bbox[0][0], bbox[1][0]])
-    UR = np.array([bbox[0][1], bbox[1][0]])
-    BR = np.array([bbox[0][1], bbox[1][1]])
-    BL = np.array([bbox[0][0], bbox[1][1]])
+    # Initializing Id matrix:
+    Id = np.zeros(Il.shape)
 
-    left = bbox[0][0]
-    right = bbox[0][1]
-    up = bbox[1][0]
-    down = bbox[1][1]
+    # Defining the window size and the bounds on which we will search through later:
+    window_size = 7
+    UR = bbox[1][0]
+    BR = bbox[1][1] + 1 - window_size
+    UL = bbox[0][0]
+    BL = bbox[0][1] + 1 - window_size
 
-    window_size = 5
-    Id = np.zeros((Il.shape[0], Il.shape[1]))
-    for y in range(up, down):
-        for x in range(left, right):
-            disparity_list = []
-            for disparity in range(-maxd, maxd):
-                # Define windows of equal size in left and right images:
-                [L, R, T, B] = window_bounds(Il, Ir, y, x - disparity, window_size)
-                Il_window = Il[T:B, L:R]
-                Ir_window = Ir[T:B, L:R]
+    # Looping through y and x in left image:
+    for y in range(UR, BR, window_size):
+        for x in range(UL, BL, window_size):
+            SAD_array = []
+            # Searching across all x values in the disparity bounds for the right image:
+            for x_search in range(x - maxd, x + 1):
+                # Computing the SAD score between the constant window in the left image and the current window in
+                # the right image:
+                SAD_array.append(sum_of_absolute_differences(x, y, x_search, window_size, Il, Ir))
+            # Appending the disparity that had the lowest SAD score:
+            Id[y:y + window_size, x:x + window_size] = maxd - np.argmin(np.array(SAD_array))
+    # ------------------
 
-                # Compute the SAD score between the windows:
-                SAD = sum_of_absolute_differences(Il_window, Ir_window)
-
-                # Add score to list to be sorted later:
-                disparity_list.append([SAD, disparity])
-
-            # Choose the disparity with the lowest SAD score
-            disparity_list = np.sort(np.array(disparity_list), axis=0)
-            Id[y, x] = disparity_list[0][1]
     return Id
+

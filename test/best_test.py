@@ -4,7 +4,7 @@ from mat4py import loadmat
 from imageio import imread
 import time
 
-from main.stereo_disparity_fast import stereo_disparity_fast
+from main.stereo_disparity_best import stereo_disparity_best
 maxd = 52
 
 ###########################################################
@@ -18,15 +18,15 @@ bboxes = loadmat("../images/bboxes.mat")
 bbox = np.array(bboxes["teddy_02"]["bbox"])
 
 start = time.time()
-Id = stereo_disparity_fast(Il, Ir, bbox, maxd)
+Id = stereo_disparity_best(Il, Ir, bbox, maxd)
 elapsed_time = round(time.time() - start, 3)
-print("Elapsed time for fast algorithm operating on teddy images =", elapsed_time)
+print("Elapsed time for best algorithm operating on teddy images =", elapsed_time)
 
 plt.imshow(Id, cmap="gray")
 plt.xlabel("X")
 plt.ylabel("Y")
-plt.title("Teddy Image Depth Mapping for Fast Algorithm ({}s)".format(elapsed_time))
-plt.savefig('../results/fast/depth_mapping_fast_teddy.png')
+plt.title("Teddy Image Depth Mapping for Best Algorithm ({}s)".format(elapsed_time))
+plt.savefig('../results/best/depth_mapping_best_teddy.png')
 plt.show()
 
 ###########################################################
@@ -39,15 +39,15 @@ Ir = imread("../images/cones_image_06.png", as_gray = True)
 bbox = np.array(bboxes["cones_02"]["bbox"])
 
 start = time.time()
-Id = stereo_disparity_fast(Il, Ir, bbox, maxd)
+Id = stereo_disparity_best(Il, Ir, bbox, maxd)
 elapsed_time = round(time.time() - start, 3)
-print("Elapsed time for fast algorithm operating on cones images =", elapsed_time)
+print("Elapsed time for best algorithm operating on cones images =", elapsed_time)
 
 plt.imshow(Id, cmap="gray")
 plt.xlabel("X")
 plt.ylabel("Y")
-plt.title("Cones Image Depth Mapping for Fast Algorithm ({}s)".format(elapsed_time))
-plt.savefig('../results/fast/depth_mapping_fast_cones.png')
+plt.title("Cones Image Depth Mapping for Best Algorithm ({}s)".format(elapsed_time))
+plt.savefig('../results/best/depth_mapping_best_cones.png')
 plt.show()
 
 ###########################################################
@@ -60,13 +60,13 @@ Ir = imread("../images/books_image_05.png", as_gray = True)
 bbox = np.array(bboxes["books_01"]["bbox"])
 
 start = time.time()
-Id = stereo_disparity_fast(Il, Ir, bbox, 52)
+Id = stereo_disparity_best(Il, Ir, bbox, 52)
 elapsed_time = round(time.time() - start, 3)
-print("Elapsed time for fast algorithm operating on books images =", elapsed_time)
+print("Elapsed time for best algorithm operating on books images =", elapsed_time)
 
 plt.imshow(Id, cmap="gray")
 plt.xlabel("X")
 plt.ylabel("Y")
-plt.title("Books Image Depth Mapping for Fast Algorithm ({}s)".format(elapsed_time))
-plt.savefig('../results/fast/depth_mapping_fast_books.png')
+plt.title("Books Image Depth Mapping for Best Algorithm ({}s)".format(elapsed_time))
+plt.savefig('../results/best/depth_mapping_best_books.png')
 plt.show()
