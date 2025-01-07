@@ -1,4 +1,4 @@
-### Project Description:
+# Project Description
 The purpose of this project was to learn about various stereo image correspondence algorithms. 
 There were two algorithms implemented in this project. The first algorithm is a simple windowed
 local algorithm that uses the sum of absolute difference metric to compare disparities. The second
@@ -41,11 +41,11 @@ algorithm to obtain a significantly stronger estimate.
 
 This algorithm takes approximately 3 minutes to compute a depth mapping from two images.
 
-### Results:
+# Results
 The fast and accurate algorithms were applied to 3 sets of image couples. The results are displayed sequentially
 for each image couple below:
-#### Belief Propagation Algorithm Results:
-##### Teddy Stereo Image:
+#### Belief Propagation Algorithm Results
+##### Teddy Stereo Image
 
 ![](images/teddy_image_02.png)
 
@@ -55,7 +55,7 @@ for each image couple below:
 
 *Figure 5: Depth mapping of teddy image pair using belief propagation algorithm*
 
-##### Books Stereo Image:
+##### Books Stereo Image
 
 ![](images/books_image_01.png)
 
@@ -65,7 +65,7 @@ for each image couple below:
 
 *Figure 7: Depth mapping of books image pair using belief propagation*
 
-##### Cones Stereo Image:
+##### Cones Stereo Image
 
 ![](images/cones_image_02.png)
 
@@ -75,8 +75,8 @@ for each image couple below:
 
 *Figure 9: Depth mapping of cones image pair using belief propagation*
 
-#### Fast Algorithm Results:
-##### Teddy Stereo Image:
+#### Fast Algorithm Results
+##### Teddy Stereo Image
 
 ![](images/teddy_image_02.png)
 
@@ -97,7 +97,7 @@ for each image couple below:
 
 *Figure 13: Depth mapping of books image pair using SAD metric based algorithm*
 
-#### Cones Stereo Image:
+#### Cones Stereo Image
 
 ![](images/cones_image_02.png)
 
